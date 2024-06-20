@@ -89,13 +89,13 @@ def main():
         # Normalize to a ParkScore rating of up to 100
         data['Ranking'] = (data['total_points'] / data['total_points'].max()) * 100
 
+        data=data.sort_values(by='Ranking',ascending=False)
+
         if current_city is None:
             data=data.head(10)
         else:
             threshold=data[data['City']==current_city].Ranking.values[0]
             data=data[data['Ranking']>=threshold]
-
-        data=data.sort_values(by='Ranking',ascending=False)
 
         fig = px.bar(data, x='City', y='Ranking',
                     hover_name='City',
