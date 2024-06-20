@@ -47,7 +47,7 @@ def assign_points(series, num_brackets=50,importance=1):
 
 @st.cache_data
 def read_data():
-    data=pd.read_csv('https://raw.githubusercontent.com/Vivian-Ellis/city-rankings/main/main/data.csv',index_col=0)
+    data=pd.read_csv('https://raw.githubusercontent.com/Vivian-Ellis/city-rankings/main/data.csv',index_col=0)
     return data.sort_values(by='City',ascending=True)
 
 def main():
