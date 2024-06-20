@@ -20,18 +20,22 @@ def load_lottieurl(url: str):
 # Define function to assign points based on brackets
 def assign_points(series, num_brackets=50,importance=1):
     sorted_series = np.sort(series)
-    thresh = np.median(sorted_series)*2
+    high_thresh = np.median(sorted_series)*2
+    low_thresh = np.median(sorted_series)*.5
     # percentile95=np.percentile(sorted_series, 95)
     # top_bracket_value = 2 * percentile95
     
     points = np.zeros_like(series, dtype=float)
 
     # Define brackets
-    bracket_ranges = np.linspace(0, thresh, num_brackets)
+    bracket_ranges = np.linspace(0, high_thresh, num_brackets)
     
     for i, value in enumerate(series):
-        if value > thresh:
+        if value > high_thresh:
             weighted_points=100*importance
+            points[i] = weighted_points
+        elif value < low_thresh and importance<1:
+            weighted_points=-100*importance
             points[i] = weighted_points
         else:
             for j in range(len(bracket_ranges) - 1):
